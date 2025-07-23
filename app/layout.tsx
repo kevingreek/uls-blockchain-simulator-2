@@ -1,6 +1,8 @@
+import './globals.css';
+
 export const metadata = {
-  title: "ULS Blockchain Simulator",
-  description: "Simulating tokenized message flows between ULS instances and Blockchain.",
+  title: 'ULS Blockchain Simulator',
+  description: 'Demo visual simulation by Kostas Sotiropoulos',
 };
 
 export default function RootLayout({ children }) {
