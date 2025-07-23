@@ -1,0 +1,32 @@
+{
+  "name": "uls-blockchain-simulator-2",
+  "version": "1.0.0",
+  "lockfileVersion": 2,
+  "requires": true,
+  "packages": {
+    "": {
+      "dependencies": {
+        "next": "^13.4.19",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+      },
+      "devDependencies": {
+        "@swc/core": "^1.3.91",
+        "@swc/helpers": "^0.5.3"
+      }
+    },
+    "node_modules/@swc/core": {
+      "version": "1.3.91",
+      "resolved": "https://registry.npmjs.org/@swc/core/-/core-1.3.91.tgz",
+      "integrity": "sha512-...mocked-integrity...",
+      "engines": {
+        "node": ">=12"
+      }
+    },
+    "node_modules/@swc/helpers": {
+      "version": "0.5.3",
+      "resolved": "https://registry.npmjs.org/@swc/helpers/-/helpers-0.5.3.tgz",
+      "integrity": "sha512-...mocked-integrity..."
+    }
+  }
+}
