@@ -65,7 +65,7 @@ function Blockchain({ x, y }) {
 function MessageEnvelope({ x, y, state, tag, blink }) {
   let bg = "#19a3ed", border = "#19a3ed", icon = "✉️", key = null, color = "#fff";
   if (state === "tokenized") { bg = "#12C98B"; border = "#12C98B"; key = "🔑"; }
-  if (state === "rejected") { bg = "#19a3ed"; border = "#e73c3c"; key = "❌"; }
+  if (state === "rejected") { bg = "#e73c3c"; border = "#e73c3c"; key = "🔑"; }
   if (state === "blink") { bg = "#fde047"; border = "#facc15"; color = "#18181b"; }
   return (
     <div style={{
@@ -230,7 +230,7 @@ function LegendBox() {
         <span>= Tokenized/Hashed</span>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-        <span style={{ display: "inline-block", width: 22, height: 22, borderRadius: 11, background: "#e73c3c", border: "2px solid #e73c3c" }}
+        <span style={{ display: "inline-block", width: 22, height: 22, borderRadius: 11, background: "#e73c3c", border: "2px solid #e73c3c" }}></span>
         <span>= Untokenized/Rejected</span>
       </div>
       <div style={{ height: 9 }} />
