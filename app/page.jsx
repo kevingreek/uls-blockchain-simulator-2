@@ -218,15 +218,15 @@ function CurvedConnections() {
       </svg>
       // After the SVG lines, add these instead of old LineLabel:
       <LineTag start={FEED1_START} end={FEED1_END} color="#888" text="Message Feed" t={0.55} offsetPx={32} />
-      <LineTag start={FEED2_START} end={FEED2_END} color="#888" text="Message Feed" t={0.55} offsetPx={32} />
-      <LineTag start={LAMBDA[0].from} end={LAMBDA[0].to} color="#8B4513" text="Λ-Link" t={0.60} offsetPx={-22} />
-      <LineTag start={LAMBDA[1].from} end={LAMBDA[1].to} color="#8B4513" text="Λ-Link" t={0.65} offsetPx={27} />
+      <LineTag start={FEED2_START} end={FEED2_END} color="#888" text="Message Feed" t={0.55} offsetPx={-22} />
+      <LineTag start={LAMBDA[0].from} end={LAMBDA[0].to} color="#8B4513" text="Λ-Link" t={0.9} offsetPx={-22} />
+      <LineTag start={LAMBDA[1].from} end={LAMBDA[1].to} color="#8B4513" text="Λ-Link" t={0.9} offsetPx={-22} />
       <LineTag start={LAMBDA[2].from} end={LAMBDA[2].to} color="#8B4513" text="Λ-Link" t={0.6} offsetPx={22} />
       <LineTag start={LAMBDA[3].from} end={LAMBDA[3].to} color="#8B4513" text="Λ-Link" t={0.6} offsetPx={22} />
       <LineTag start={rpc1_bc} end={rpc1_uls} color="#a63cff" text="RPC channel" t={0.46} offsetPx={25} />
       <LineTag start={rpc2_bc} end={rpc2_uls} color="#a63cff" text="RPC channel" t={0.46} offsetPx={25} />
       <LineTag start={rpc3_bc} end={rpc3_uls} color="#a63cff" text="RPC channel" t={0.45} offsetPx={-25} />
-      <LineTag start={rpc4_bc} end={rpc4_uls} color="#a63cff" text="RPC channel" t={0.46} offsetPx={22} />
+      <LineTag start={rpc4_bc} end={rpc4_uls} color="#a63cff" text="RPC channel" t={0.46} offsetPx={-22} />
     </>
   );
 }
@@ -280,7 +280,7 @@ function CLILog({ log }) {
       width: 940, height: 220, background: "#18181b", color: "#a3e635",
       fontFamily: "monospace", borderRadius: 10, padding: 13, overflow: "hidden", position: "relative", border: "2px solid #222"
     }}>
-      <div style={{ height: "172px", overflow: "hidden" }}> {/* 220 - paddings/buttons */}
+      <div style={{ height: "202px", overflow: "hidden" }}> 
         {show.length === 0 && <div style={{ opacity: 0.6, fontStyle: "italic", color: "#999" }}>No logs</div>}
         {show.map((line, i) =>
           <div key={i} style={{ whiteSpace: "pre", fontSize: 15 }}>{line}</div>
@@ -476,7 +476,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
             width: 260,
             height: 260,
             transform: "translate(-50%, -50%)",
-            opacity: 0.2,
+            opacity: 0.1,
             zIndex: 0,
             pointerEvents: "none"
           }}
@@ -615,6 +615,7 @@ export default function Page() {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
+        padding : 20px,
         margin: "0px auto 0 auto",
         height: 44,
         background: "transparent"
@@ -624,17 +625,17 @@ export default function Page() {
           <Counter value={simApp.valid3} label="Valid" color="#14c572" />
           <Counter value={simApp.reject3} label="Rejected" color="#e73c3c" />
         </div>
-        <div style={{ display: "flex", gap: 12 }}>
-          <button onClick={() => setPaused(true)} style={{ padding: "6px 14px" }}>Pause</button>
-          <button onClick={() => setPaused(false)} style={{ padding: "6px 14px" }}>Resume</button>
+        <div style={{ display: "flex", gap: 12 }}>         
+          <button onClick={() => setPaused(true)} style={{ background: "#3b82f6", color: "#fff", fontSize: 16 ,padding: "6px 14px", border: "none", borderRadius: 7, fontWeight: 600, cursor: "pointer" }}>Pause</button>
+          <button onClick={() => setPaused(false)} style={{ background: "#3b82f6", color: "#fff", fontSize: 16 ,padding: "6px 14px", border: "none", borderRadius: 7, fontWeight: 600, cursor: "pointer" }}>Resume</button>
           <button onClick={() => {
             setMessages([]); setStacks({ uls3: [], uls4: [] }); setLog([]); setIdx(0); setPaused(false);
-          }} style={{ padding: "6px 14px" }}>Reset</button>
+          }} style={{ background: "#3b82f6", color: "#fff", fontSize: 16 ,padding: "6px 14px", border: "none", borderRadius: 7, fontWeight: 600, cursor: "pointer" }}>Reset</button>
         </div>
         <div style={{ display: "flex", alignItems: "center", fontWeight: "bold", fontSize: 17 }}>
           ULS-4:
-          <Counter value={simApp.valid4} label="Valid" color="#14c572" />
-          <Counter value={simApp.reject4} label="Rejected" color="#e73c3c" />
+          <Counter value={simApp.valid4} label="Tokenized/Valid" color="#14c572" />
+          <Counter value={simApp.reject4} label="Untokenized/Rejected" color="#e73c3c" />
         </div>
       </div>
 
