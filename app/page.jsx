@@ -223,28 +223,28 @@ function LegendBox() {
       <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 5, color: "#111" }}>Legend</div>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <span style={{ display: "inline-block", width: 22, height: 22, borderRadius: 11, background: "#19a3ed", border: "2px solid #19a3ed" }} />
-        <span>= Pure Message</span>
+        <span> : Pure Message </span>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <span style={{ display: "inline-block", width: 22, height: 22, borderRadius: 11, background: "#12C98B", border: "2px solid #12C98B" }} />
-        <span>= Tokenized/Hashed</span>
+        <span> : Tokenized/Hashed </span>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <span style={{ display: "inline-block", width: 22, height: 22, borderRadius: 11, background: "#e73c3c", border: "2px solid #e73c3c" }} />
-        <span>= Untokenized/Rejected</span>
+        <span> : Untokenized/Rejected </span>
       </div>
       <div style={{ height: 9 }} />
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <span style={{ display: "inline-block", width: 36, height: 4, background: "#888", borderRadius: 2, border: "none" }} />
-        <span>Message Feed</span>
+        <span> : Message Feed </span>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <span style={{ display: "inline-block", width: 36, height: 4, background: "#8B4513", borderRadius: 2, border: "none" }} />
-        <span>Λ-Link</span>
+        <span> : Λ-Link </span>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <span style={{ display: "inline-block", width: 36, height: 4, background: "#a63cff", borderRadius: 2, border: "none" }} />
-        <span>RPC channel</span>
+        <span>: RPC/API </span>
       </div>
     </div>
   );
