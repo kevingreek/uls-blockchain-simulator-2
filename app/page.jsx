@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 
 const PASSWORD = "Bitrezus";
 
-// ==== CANVAS & POSITIONS ====
-const CANVAS_W = 980, CANVAS_H = 680;
+const CANVAS_W = 1180, CANVAS_H = 800;
 const ULS_W = 135, ULS_H = 66, BC_W = 130, BC_H = 70, SRC_W = 170, SRC_H = 55;
 const positions = {
   source: { x: CANVAS_W / 2, y: 65 },
@@ -43,7 +42,6 @@ function bezier(p0, c, p1, t) {
 }
 function randomHash() { return Math.random().toString(36).substring(2, 10).toUpperCase(); }
 
-// ==== BLOCKS ====
 function RectBlock({ x, y, label, color = "#20B2AA", bg = "#EFFFFD", width = ULS_W, height = ULS_H, borderWidth = 3, labelColor = "#18181b" }) {
   return (
     <div style={{
@@ -65,7 +63,7 @@ function Blockchain({ x, y }) {
 function MessageEnvelope({ x, y, state, tag, blink }) {
   let bg = "#19a3ed", border = "#19a3ed", icon = "✉️", key = null, color = "#fff";
   if (state === "tokenized") { bg = "#12C98B"; border = "#12C98B"; key = "🔑"; }
-  if (state === "rejected") { bg = "#19a3ed"; border = "#19a3ed"; key = "❌"; }
+  if (state === "rejected") { bg = "#e73c3c"; border = "#e73c3c"; key = "❌"; }
   if (state === "blink") { bg = "#fde047"; border = "#facc15"; color = "#18181b"; }
   return (
     <div style={{
@@ -83,8 +81,6 @@ function MessageEnvelope({ x, y, state, tag, blink }) {
     </div>
   );
 }
-
-// ==== LINES & TAGS ====
 function LineLabel({ x, y, color, text }) {
   return (
     <div style={{
@@ -95,19 +91,16 @@ function LineLabel({ x, y, color, text }) {
 }
 function CurvedConnections() {
   const { source, uls1, uls2, uls3, uls4, blockchain } = positions;
-  // Message Feed (grey, straight)
   const FEED1_START = getSide(source, SRC_W, SRC_H, "left");
   const FEED1_END = getSide(uls1, ULS_W, ULS_H, "right");
   const FEED2_START = getSide(source, SRC_W, SRC_H, "right");
   const FEED2_END = getSide(uls2, ULS_W, ULS_H, "left");
-  // Λ-Link (brown, straight)
   const LAMBDA = [
     { from: getSide(uls1, ULS_W, ULS_H, "bottom"), to: getSide(uls3, ULS_W, ULS_H, "top") },
     { from: getSide(uls1, ULS_W, ULS_H, "bottom"), to: getCorner(uls4, ULS_W, ULS_H, "ul") },
     { from: getSide(uls2, ULS_W, ULS_H, "bottom"), to: getCorner(uls3, ULS_W, ULS_H, "ur") },
     { from: getSide(uls2, ULS_W, ULS_H, "bottom"), to: getSide(uls4, ULS_W, ULS_H, "top") }
   ];
-  // RPC (purple, 2 curved, 2 straight, all bidirectional)
   const rpc1_bc = getCorner(blockchain, BC_W, BC_H, "ul");
   const rpc1_uls = getCorner(uls1, ULS_W, ULS_H, "lr");
   const rpc2_bc = getCorner(blockchain, BC_W, BC_H, "ur");
@@ -210,11 +203,10 @@ function CurvedConnections() {
   );
 }
 
-// ==== LEGEND ====
 function LegendBox() {
   return (
     <div style={{
-      width: 300, background: "#fff", border: "2px solid #d1d5db", borderRadius: 15,
+      width: 220, background: "#fff", border: "2px solid #d1d5db", borderRadius: 15,
       padding: "18px 16px 13px 20px", boxShadow: "0 2px 8px #aaa2",
       display: "flex", flexDirection: "column", gap: 7,
       marginRight: 20,
@@ -223,45 +215,44 @@ function LegendBox() {
       <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 5, color: "#111" }}>Legend</div>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <span style={{ display: "inline-block", width: 22, height: 22, borderRadius: 11, background: "#19a3ed", border: "2px solid #19a3ed" }} />
-        <span> : Pure Message </span>
+        <span>: Pure Message</span>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <span style={{ display: "inline-block", width: 22, height: 22, borderRadius: 11, background: "#12C98B", border: "2px solid #12C98B" }} />
-        <span> : Tokenized/Hashed </span>
+        <span>: Tokenized/Hashed</span>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <span style={{ display: "inline-block", width: 22, height: 22, borderRadius: 11, background: "#e73c3c", border: "2px solid #e73c3c" }} />
-        <span> : Untokenized/Rejected </span>
+        <span>: Untokenized/Rejected</span>
       </div>
       <div style={{ height: 9 }} />
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <span style={{ display: "inline-block", width: 36, height: 4, background: "#888", borderRadius: 2, border: "none" }} />
-        <span> : Message Feed </span>
+        <span>: Message Feed</span>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <span style={{ display: "inline-block", width: 36, height: 4, background: "#8B4513", borderRadius: 2, border: "none" }} />
-        <span> : Λ-Link </span>
+        <span>: Λ-Link</span>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <span style={{ display: "inline-block", width: 36, height: 4, background: "#a63cff", borderRadius: 2, border: "none" }} />
-        <span>: RPC/API </span>
+        <span>: RPC/API</span>
       </div>
     </div>
   );
 }
 
-// ==== CLI LOG ====
-const CLI_PAGE = 6;
+const CLI_PAGE = 12;
 function CLILog({ log }) {
   const [scroll, setScroll] = useState(0);
   useEffect(() => { setScroll(0); }, [log]);
   const show = log.slice(scroll, scroll + CLI_PAGE);
   return (
     <div style={{
-      width: 580, height: 200, background: "#18181b", color: "#a3e635",
+      width: 940, background: "#18181b", color: "#a3e635",
       fontFamily: "monospace", borderRadius: 10, padding: 13, overflow: "hidden", position: "relative", border: "2px solid #222"
     }}>
-      <div style={{ height: "118px", overflow: "hidden" }}>
+      <div style={{ height: "128px", overflow: "hidden" }}>
         {show.length === 0 && <div style={{ opacity: 0.6, fontStyle: "italic", color: "#999" }}>No logs</div>}
         {show.map((line, i) =>
           <div key={i} style={{ whiteSpace: "pre", fontSize: 15 }}>{line}</div>
@@ -275,7 +266,6 @@ function CLILog({ log }) {
   );
 }
 
-// ==== MAIN SIMULATION LOGIC ====
 function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, idx, setIdx, paused, setPaused }) {
   useEffect(() => {
     if (paused || idx >= 2000) return;
@@ -296,21 +286,20 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         hash: null
       }]);
       setLog(logs => [
-        `[${new Date().toLocaleTimeString()}] [GEN] ${ulsTarget.toUpperCase()} - ${n % 5 === 0 || n % 9 === 0 ? "REJECT" : "VALID"}  ${`#${String(n).padStart(4, "0")} - ${tagType}`}`,
+        `[${new Date().toLocaleTimeString()}] [GEN] ${ulsTarget.toUpperCase()} - ${isRejected ? "REJECT" : "VALID"}  #${String(n).padStart(4, "0")} - ${tagType}`,
         ...logs
       ]);
       setIdx(n);
-    }, 10000);
+    }, 9000);
     return () => clearTimeout(t);
   }, [idx, paused]);
-
   useEffect(() => {
     if (paused) return;
     const interval = setInterval(() => {
       setMessages(msgs => msgs.map(msg => {
         let { state, progress, isRejected, at, tag, id, lastStep, hash } = msg;
         let now = Date.now();
-        if (state === "feed" && progress < 1) return { ...msg, progress: Math.min(progress + 0.014, 1) };
+        if (state === "feed" && progress < 1) return { ...msg, progress: Math.min(progress + 0.013, 1) };
         if (state === "feed" && progress >= 1) {
           setLog(logs => [
             `[${new Date().toLocaleTimeString()}] [ARRIVE] ${at.toUpperCase()} | ${tag}`,
@@ -334,7 +323,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
           ]);
           return { ...msg, state: "on-bc", lastStep: now };
         }
-        if (state === "on-bc" && now - lastStep > 4000) {
+        if (state === "on-bc" && now - lastStep > 3000) {
           const newHash = randomHash();
           setLog(logs => [
             `[${new Date().toLocaleTimeString()}] [TOKENIZED] Hash: ${newHash} | ${tag}`,
@@ -342,7 +331,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
           ]);
           return { ...msg, state: "rpc-from-bc", progress: 0, lastStep: now, hash: newHash, tag: `${tag} - ${newHash}` };
         }
-        if (state === "rpc-from-bc" && progress < 1) return { ...msg, progress: Math.min(progress + 0.0085, 1) };
+        if (state === "rpc-from-bc" && progress < 1) return { ...msg, progress: Math.min(progress + 0.0095, 1) };
         if (state === "rpc-from-bc" && progress >= 1) {
           setLog(logs => [
             `[${new Date().toLocaleTimeString()}] [RETURN] ${at.toUpperCase()} (TOKENIZED) | ${tag}`,
@@ -351,7 +340,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
           return { ...msg, state: "dup-to-uls3", progress: 0, lastStep: now };
         }
         if ((state === "dup-to-uls3" || state === "dup-to-uls4") && progress < 1) {
-          return { ...msg, progress: Math.min(progress + 0.0095, 1) };
+          return { ...msg, progress: Math.min(progress + 0.0105, 1) };
         }
         if (state === "dup-to-uls3" && progress >= 1) {
           setLog(logs => [
@@ -384,7 +373,6 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
     }, 20);
     return () => clearInterval(interval);
   }, [paused]);
-
   function getMsgPos(msg) {
     const { state, progress, at } = msg;
     if (state === "feed") {
@@ -427,8 +415,8 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
       <div key={m.id}
         style={{
           position: "absolute",
-          left: pos.x + (side === "left" ? -48 : 48),
-          top: pos.y + 28 + (i * 19),
+          left: pos.x + (side === "left" ? -55 : 55),
+          top: pos.y + 30 + (i * 19),
           zIndex: 20
         }}>
         <MessageEnvelope x={0} y={0} state={isRejected ? "rejected" : "tokenized"} tag={m.tag} />
@@ -439,19 +427,17 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
   const reject3 = stacks.uls3?.filter(x => x.state === "rejected").length || 0;
   const valid4 = stacks.uls4?.filter(x => x.state === "tokenized").length || 0;
   const reject4 = stacks.uls4?.filter(x => x.state === "rejected").length || 0;
-
   return {
     valid3, reject3, valid4, reject4,
     render: (
       <>
         <CurvedConnections />
-        <RectBlock {...positions.source} label="External Message Source" color="#4497f3" bg="#e0f4ff" width={SRC_W} height={SRC_H} />
+        <RectBlock {...positions.source} label="External Message Source" color="#3888f3" bg="#e0f4ff" width={SRC_W} height={SRC_H} />
         <Blockchain {...positions.blockchain} />
         <RectBlock {...positions.uls1} label="ULS-1" />
         <RectBlock {...positions.uls2} label="ULS-2" />
         <RectBlock {...positions.uls3} label="ULS-3" />
         <RectBlock {...positions.uls4} label="ULS-4" />
-        {/* Watermark */}
         <img
           src="/favicon.png"
           alt="Astropledge Favicon"
@@ -467,12 +453,10 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
             pointerEvents: "none"
           }}
         />
-        {/* Live messages in motion */}
         {messages.filter(m => !m.finished).map((m, i) => {
           const pos = getMsgPos(m);
           return <MessageEnvelope key={m.id} {...pos} state={m.state === "rpc-from-bc" && !m.isRejected ? "tokenized" : m.isRejected ? "rejected" : m.state} tag={m.tag} blink={m.state === "blink"} />;
         })}
-        {/* Stack for ULS-3 and ULS-4 */}
         <StackRender stack={stacks.uls3?.filter(x => !x.isRejected)} pos={positions.uls3} side="left" />
         <StackRender stack={stacks.uls3?.filter(x => x.isRejected)} pos={positions.uls3} side="right" isRejected />
         <StackRender stack={stacks.uls4?.filter(x => !x.isRejected)} pos={positions.uls4} side="left" />
@@ -482,18 +466,15 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
   };
 }
 
-// ==== MAIN PAGE ====
 export default function Page() {
   const [authed, setAuthed] = useState(false);
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
-  // States for main app
   const [log, setLog] = useState([]);
   const [messages, setMessages] = useState([]);
   const [stacks, setStacks] = useState({ uls3: [], uls4: [] });
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
-  // Use ref for SimulatorApp so it exposes counters
   const simApp = SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, idx, setIdx, paused, setPaused });
 
   if (!authed) {
@@ -566,7 +547,6 @@ export default function Page() {
     );
   }
 
-  // Counters pills
   function Counter({ value, label, color }) {
     return (
       <span style={{
@@ -578,7 +558,6 @@ export default function Page() {
     );
   }
 
-  // ---- MAIN RENDER ----
   return (
     <div style={{
       minHeight: "100vh",
@@ -588,37 +567,6 @@ export default function Page() {
       flexDirection: "column",
       alignItems: "center"
     }}>
-      {/* --- HEADER: Counters & Buttons --- */}
-      <div style={{
-        width: CANVAS_W + 40,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        margin: "30px auto 0 auto",
-        height: 46
-      }}>
-        {/* ULS-3 Counters */}
-        <div style={{ display: "flex", alignItems: "center", fontWeight: "bold", fontSize: 17 }}>
-          ULS-3:
-          <Counter value={simApp.valid3} label="Valid" color="#14c572" />
-          <Counter value={simApp.reject3} label="Rejected" color="#e73c3c" />
-        </div>
-        {/* Center Buttons */}
-        <div style={{ display: "flex", gap: 12 }}>
-          <button onClick={() => setPaused(true)} style={{ padding: "6px 14px" }}>Pause</button>
-          <button onClick={() => setPaused(false)} style={{ padding: "6px 14px" }}>Resume</button>
-          <button onClick={() => {
-            setMessages([]); setStacks({ uls3: [], uls4: [] }); setLog([]); setIdx(0); setPaused(false);
-          }} style={{ padding: "6px 14px" }}>Reset</button>
-        </div>
-        {/* ULS-4 Counters */}
-        <div style={{ display: "flex", alignItems: "center", fontWeight: "bold", fontSize: 17 }}>
-          ULS-4:
-          <Counter value={simApp.valid4} label="Valid" color="#14c572" />
-          <Counter value={simApp.reject4} label="Rejected" color="#e73c3c" />
-        </div>
-      </div>
-
       {/* --- CANVAS --- */}
       <div style={{
         width: CANVAS_W,
@@ -626,11 +574,40 @@ export default function Page() {
         position: "relative",
         background: "#f6f8fa",
         border: "1px solid #ddd",
-        margin: "0px auto 0 auto",
+        margin: "40px auto 0 auto",
         overflow: "hidden",
         borderRadius: 11
       }}>
         {simApp.render}
+      </div>
+
+      {/* --- HEADER BAR just under the canvas --- */}
+      <div style={{
+        width: CANVAS_W,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        margin: "0px auto 0 auto",
+        height: 44,
+        background: "transparent"
+      }}>
+        <div style={{ display: "flex", alignItems: "center", fontWeight: "bold", fontSize: 17 }}>
+          ULS-3:
+          <Counter value={simApp.valid3} label="Valid" color="#14c572" />
+          <Counter value={simApp.reject3} label="Rejected" color="#e73c3c" />
+        </div>
+        <div style={{ display: "flex", gap: 12 }}>
+          <button onClick={() => setPaused(true)} style={{ padding: "6px 14px" }}>Pause</button>
+          <button onClick={() => setPaused(false)} style={{ padding: "6px 14px" }}>Resume</button>
+          <button onClick={() => {
+            setMessages([]); setStacks({ uls3: [], uls4: [] }); setLog([]); setIdx(0); setPaused(false);
+          }} style={{ padding: "6px 14px" }}>Reset</button>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", fontWeight: "bold", fontSize: 17 }}>
+          ULS-4:
+          <Counter value={simApp.valid4} label="Valid" color="#14c572" />
+          <Counter value={simApp.reject4} label="Rejected" color="#e73c3c" />
+        </div>
       </div>
 
       {/* --- FOOTER: Legend + CLI log --- */}
@@ -639,7 +616,7 @@ export default function Page() {
         flexDirection: "row",
         alignItems: "flex-start",
         gap: 38,
-        width: CANVAS_W + 40,
+        width: CANVAS_W,
         margin: "25px auto 0 auto",
         justifyContent: "center"
       }}>
@@ -651,15 +628,15 @@ export default function Page() {
       <div style={{
         width: CANVAS_W,
         textAlign: "center",
-        marginTop: 28,
-        marginBottom: 18,
+        marginTop: 24,
+        marginBottom: 16,
         color: "#222",
         fontSize: 15,
         fontWeight: 500,
         letterSpacing: 0.5,
         opacity: 0.86
       }}>
-        Copyright 2025 (c) by Bitrezus I.K.E. All rights reserved.
+        Copyright 2025 (c) by Bitrezus I.K.E. All rights reserved. [Confidential For Scytalys Employees Only!]
       </div>
     </div>
   );
