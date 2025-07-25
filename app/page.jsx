@@ -60,7 +60,7 @@ function Blockchain({ x, y }) {
 function MessageEnvelope({ x, y, state, tag, blink }) {
   let bg = "#2196f3", border = "#2196f3", icon = "✉️", key = null, color = "#fff";
   if (state === "tokenized") { bg = "#21c36b"; border = "#21c36b"; key = "🔑"; }
-  if (state === "rejected") { bg = "#ef4444"; border = "#ef4444"; key = "❌"; }
+  if (state === "rejected") { bg = "#2196f3"; border = "#ef4444"; key = "❌"; }
   if (state === "blink") { bg = "#fde047"; border = "#facc15"; color = "#18181b"; }
   return (
     <div style={{
