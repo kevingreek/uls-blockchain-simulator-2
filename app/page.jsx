@@ -65,7 +65,7 @@ function Blockchain({ x, y }) {
 function MessageEnvelope({ x, y, state, tag, blink }) {
   let bg = "#19a3ed", border = "#19a3ed", icon = "✉️", key = null, color = "#fff";
   if (state === "tokenized") { bg = "#12C98B"; border = "#12C98B"; key = "🔑"; }
-  if (state === "rejected") { bg = "#e73c3c"; border = "#e73c3c"; key = "🔑"; }
+  if (state === "rejected") { bg = "#19a3ed"; border = "#19a3ed"; key = "❌"; }
   if (state === "blink") { bg = "#fde047"; border = "#facc15"; color = "#18181b"; }
   return (
     <div style={{
@@ -214,7 +214,7 @@ function CurvedConnections() {
 function LegendBox() {
   return (
     <div style={{
-      width: 200, background: "#fff", border: "2px solid #d1d5db", borderRadius: 15,
+      width: 300, background: "#fff", border: "2px solid #d1d5db", borderRadius: 15,
       padding: "18px 16px 13px 20px", boxShadow: "0 2px 8px #aaa2",
       display: "flex", flexDirection: "column", gap: 7,
       marginRight: 20,
@@ -258,7 +258,7 @@ function CLILog({ log }) {
   const show = log.slice(scroll, scroll + CLI_PAGE);
   return (
     <div style={{
-      width: 380, height: 160, background: "#18181b", color: "#a3e635",
+      width: 580, height: 200, background: "#18181b", color: "#a3e635",
       fontFamily: "monospace", borderRadius: 10, padding: 13, overflow: "hidden", position: "relative", border: "2px solid #222"
     }}>
       <div style={{ height: "118px", overflow: "hidden" }}>
@@ -462,7 +462,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
             width: 260,
             height: 260,
             transform: "translate(-50%, -50%)",
-            opacity: 0.4,
+            opacity: 0.2,
             zIndex: 0,
             pointerEvents: "none"
           }}
