@@ -60,7 +60,7 @@ function Blockchain({ x, y }) {
 function MessageEnvelope({ x, y, state, tag, blink }) {
   let bg = "#2196f3", border = "#2196f3", icon = "✉️", key = null, color = "#fff";
   if (state === "tokenized") { bg = "#21c36b"; border = "#21c36b"; key = "🔑"; }
-  if (state === "rejected") { bg = "#ef4444"; border = "#ef4444"; key = "🔑"; }
+  if (state === "rejected") { bg = "#ef4444"; border = "#ef4444"; key = "❌"; }
   if (state === "blink") { bg = "#fde047"; border = "#facc15"; color = "#18181b"; }
   return (
     <div style={{
@@ -238,8 +238,8 @@ function CurvedConnections() {
       <LineTag start={LAMBDA[2].from} end={LAMBDA[2].to} text="Λ-Link" color="#8B4513" t={0.80} offsetPx={20} />
       <LineTag start={LAMBDA[3].from} end={LAMBDA[3].to} text="Λ-Link" color="#8B4513" t={0.60} offsetPx={24} />
       {/* RPC tags */}
-      <CurvedLineTag start={rpc1_bc} control={RPC_CURVED[0].ctrl} end={rpc1_uls} text="RPC channel" color="#9b2cff" t={0.42} offsetPx={4} />
-      <CurvedLineTag start={rpc2_bc} control={RPC_CURVED[1].ctrl} end={rpc2_uls} text="RPC channel" color="#9b2cff" t={0.57} offsetPx={10} />
+      <CurvedLineTag start={rpc1_bc} control={RPC_CURVED[0].ctrl} end={rpc1_uls} text="RPC/API" color="#9b2cff" t={0.42} offsetPx={4} />
+      <CurvedLineTag start={rpc2_bc} control={RPC_CURVED[1].ctrl} end={rpc2_uls} text="RPC/API" color="#9b2cff" t={0.57} offsetPx={10} />
       <LineTag start={rpc3_bc} end={rpc3_uls} text="RPC channel" color="#9b2cff" t={0.45} offsetPx={-20} />
       <LineTag start={rpc4_bc} end={rpc4_uls} text="RPC channel" color="#9b2cff" t={0.46} offsetPx={22} />
     </>
@@ -278,7 +278,7 @@ function LegendBox() {
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <span style={{ display: "inline-block", width: 40, height: 5, background: "#9b2cff", borderRadius: 3, border: "none" }}></span>
-        <span style={{ fontSize: 15 }}>RPC channel</span>
+        <span style={{ fontSize: 15 }}>RPC/API</span>
       </div>
     </div>
   );
@@ -325,7 +325,7 @@ function SimulatorApp() {
       const n = idx + 1;
       const tagOpt = ["Link 11", "Link 16", "Link 22"];
       const tagType = tagOpt[Math.floor(Math.random() * 3)];
-      const isRejected = (n % 5 === 0 || n % 9 === 0);
+      const isRejected = (n % 5 === 0);
       const ulsTarget = Math.random() < 0.5 ? "uls1" : "uls2";
       setMessages(msgs => [...msgs, {
         id: n,
@@ -338,7 +338,7 @@ function SimulatorApp() {
         hash: null
       }]);
       setLog(logs => [
-        `[${new Date().toLocaleTimeString()}] [GEN] ${ulsTarget.toUpperCase()} - ${n % 5 === 0 || n % 9 === 0 ? "REJECT" : "VALID"}  ${`#${String(n).padStart(4, "0")} - ${tagType}`}`,
+        `[${new Date().toLocaleTimeString()}] [GEN] ${ulsTarget.toUpperCase()} - ${n % 5 === 0 ? "REJECT" : "VALID"}  ${`#${String(n).padStart(4, "0")} - ${tagType}`}`,
         ...logs
       ]);
       setIdx(n);
