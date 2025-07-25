@@ -1,12 +1,13 @@
-
+// app/layout.tsx
 import "../styles/globals.css";
-import Head from "next/head";
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+export const metadata = {
+  title: "Λ-Link Enhanced By Astropledge Simulator",
+};
+
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Head>
-        <title>Λ-Link Enhanced By Astropledge Simulator</title>
-      </Head>
       <body>
         {children}
         <footer>
