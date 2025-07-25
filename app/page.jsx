@@ -216,17 +216,16 @@ function CurvedConnections() {
           </marker>
         </defs>
       </svg>
-      // After the SVG lines, add these instead of old LineLabel:
-      <LineTag start={FEED1_START} end={FEED1_END} color="#888" text="Message Feed" t={0.55} offsetPx={32} />
-      <LineTag start={FEED2_START} end={FEED2_END} color="#888" text="Message Feed" t={0.55} offsetPx={-22} />
+      <LineTag start={FEED1_START} end={FEED1_END} color="#888" text="Message Feed" t={0.6} offsetPx={32} />
+      <LineTag start={FEED2_START} end={FEED2_END} color="#888" text="Message Feed" t={0.6} offsetPx={-22} />
       <LineTag start={LAMBDA[0].from} end={LAMBDA[0].to} color="#8B4513" text="Λ-Link" t={0.9} offsetPx={-22} />
       <LineTag start={LAMBDA[1].from} end={LAMBDA[1].to} color="#8B4513" text="Λ-Link" t={0.9} offsetPx={-22} />
       <LineTag start={LAMBDA[2].from} end={LAMBDA[2].to} color="#8B4513" text="Λ-Link" t={0.6} offsetPx={22} />
       <LineTag start={LAMBDA[3].from} end={LAMBDA[3].to} color="#8B4513" text="Λ-Link" t={0.6} offsetPx={22} />
-      <LineTag start={rpc1_bc} end={rpc1_uls} color="#a63cff" text="RPC channel" t={0.46} offsetPx={25} />
-      <LineTag start={rpc2_bc} end={rpc2_uls} color="#a63cff" text="RPC channel" t={0.46} offsetPx={25} />
-      <LineTag start={rpc3_bc} end={rpc3_uls} color="#a63cff" text="RPC channel" t={0.45} offsetPx={-25} />
-      <LineTag start={rpc4_bc} end={rpc4_uls} color="#a63cff" text="RPC channel" t={0.46} offsetPx={-22} />
+      <LineTag start={rpc1_bc} end={rpc1_uls} color="#a63cff" text="RPC channel" t={0.6} offsetPx={25} />
+      <LineTag start={rpc2_bc} end={rpc2_uls} color="#a63cff" text="RPC channel" t={0.6} offsetPx={25} />
+      <LineTag start={rpc3_bc} end={rpc3_uls} color="#a63cff" text="RPC channel" t={0.5} offsetPx={-25} />
+      <LineTag start={rpc4_bc} end={rpc4_uls} color="#a63cff" text="RPC channel" t={0.6} offsetPx={-22} />
     </>
   );
 }
@@ -281,7 +280,7 @@ function CLILog({ log }) {
       fontFamily: "monospace", borderRadius: 10, padding: 13, overflow: "hidden", position: "relative", border: "2px solid #222"
     }}>
       <div style={{ height: "202px", overflow: "hidden" }}> 
-        {show.length === 0 && <div style={{ opacity: 0.6, fontStyle: "italic", color: "#999" }}>No logs</div>}
+        {show.length === 0 && <div style={{ opacity: 0.9, fontStyle: "italic", color: "#999" }}>No logs yet</div>}
         {show.map((line, i) =>
           <div key={i} style={{ whiteSpace: "pre", fontSize: 15 }}>{line}</div>
         )}
@@ -296,12 +295,12 @@ function CLILog({ log }) {
 
 function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, idx, setIdx, paused, setPaused }) {
   useEffect(() => {
-    if (paused || idx >= 2000) return;
+    if (paused || idx >= 9999) return;
     const t = setTimeout(() => {
       const n = idx + 1;
-      const tagOpt = ["Link 11", "Link 16", "Link 22"];
+      const tagOpt = ["Link 11", "Link 16", "Link 22", "JREAP"];
       const tagType = tagOpt[Math.floor(Math.random() * 3)];
-      const isRejected = (n % 5 === 0 || n % 9 === 0);
+      const isRejected = (n % 7 === 0 || n % 12 === 0);
       const ulsTarget = Math.random() < 0.5 ? "uls1" : "uls2";
       setMessages(msgs => [...msgs, {
         id: n,
@@ -318,7 +317,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         ...logs
       ]);
       setIdx(n);
-    }, 9000);
+    }, 7000);
     return () => clearTimeout(t);
   }, [idx, paused]);
   useEffect(() => {
@@ -335,7 +334,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
           ]);
           return { ...msg, state: "blink", blink: true, lastStep: now, progress: 0 };
         }
-        if (state === "blink" && now - lastStep > 2000) {
+        if (state === "blink" && now - lastStep > 1000) {
           if (!isRejected) return { ...msg, state: "rpc-to-bc", progress: 0, lastStep: now };
           setLog(logs => [
             `[${new Date().toLocaleTimeString()}] [REJECT] Direct to ULS-3/ULS-4 | ${tag}`,
@@ -351,7 +350,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
           ]);
           return { ...msg, state: "on-bc", lastStep: now };
         }
-        if (state === "on-bc" && now - lastStep > 3000) {
+        if (state === "on-bc" && now - lastStep > 2000) {
           const newHash = randomHash();
           setLog(logs => [
             `[${new Date().toLocaleTimeString()}] [TOKENIZED] Hash: ${newHash} | ${tag}`,
@@ -626,8 +625,8 @@ export default function Page() {
           <Counter value={simApp.reject3} label="Rejected" color="#e73c3c" />
         </div>
         <div style={{ display: "flex", gap: 12 }}>         
-          <button onClick={() => setPaused(true)} style={{ background: "#3b82f6", color: "#fff", fontSize: 16 ,padding: "6px 14px", border: "none", borderRadius: 7, fontWeight: 600, cursor: "pointer" }}>Pause</button>
-          <button onClick={() => setPaused(false)} style={{ background: "#3b82f6", color: "#fff", fontSize: 16 ,padding: "6px 14px", border: "none", borderRadius: 7, fontWeight: 600, cursor: "pointer" }}>Resume</button>
+          <button onClick={() => setPaused(true)} style={{ background: "#3b82f6", color: "#fff", fontSize: 16 , padding: "6px 14px", border: "none", borderRadius: 7, fontWeight: 600, cursor: "pointer" }}>Pause</button>
+          <button onClick={() => setPaused(false)} style={{ background: "#3b82f6", color: "#fff", fontSize: 16 , padding: "6px 14px", border: "none", borderRadius: 7, fontWeight: 600, cursor: "pointer" }}>Resume</button>
           <button onClick={() => {
             setMessages([]); setStacks({ uls3: [], uls4: [] }); setLog([]); setIdx(0); setPaused(false);
           }} style={{ background: "#3b82f6", color: "#fff", fontSize: 16 ,padding: "6px 14px", border: "none", borderRadius: 7, fontWeight: 600, cursor: "pointer" }}>Reset</button>
