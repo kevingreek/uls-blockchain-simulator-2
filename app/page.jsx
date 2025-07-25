@@ -4,14 +4,14 @@ import React, { useState, useEffect } from "react";
 const PASSWORD = "Bitrezus";
 
 const CANVAS_W = 1180, CANVAS_H = 800;
-const ULS_W = 135, ULS_H = 66, BC_W = 130, BC_H = 70, SRC_W = 170, SRC_H = 55;
+const ULS_W = 135, ULS_H = 66, BC_W = 163, BC_H = 87, SRC_W = 213, SRC_H = 69;
 const positions = {
   source: { x: CANVAS_W / 2, y: 65 },
   uls1: { x: 130, y: 120 },
   uls2: { x: CANVAS_W - 130, y: 120 },
   uls3: { x: 130, y: CANVAS_H - 130 },
   uls4: { x: CANVAS_W - 130, y: CANVAS_H - 130 },
-  blockchain: { x: CANVAS_W / 2, y: CANVAS_H / 2 + 70 },
+  blockchain: { x: CANVAS_W / 2, y: CANVAS_H / 2 + 250 },
 };
 function getSide(pt, width, height, side) {
   const hw = width / 2, hh = height / 2;
@@ -81,14 +81,42 @@ function MessageEnvelope({ x, y, state, tag, blink }) {
     </div>
   );
 }
-function LineLabel({ x, y, color, text }) {
+function LineTag({ start, end, color, text, t = 0.5, offsetPx = 30 }) {
+  // Place label at t% along line, offset perpendicular by offsetPx, rotated with the line
+  const angle = Math.atan2(end.y - start.y, end.x - start.x) * 180 / Math.PI;
+  const perpAngle = angle + 90;
+  const pt = {
+    x: start.x + (end.x - start.x) * t,
+    y: start.y + (end.y - start.y) * t,
+  };
+  const offsetX = Math.cos((perpAngle * Math.PI) / 180) * offsetPx;
+  const offsetY = Math.sin((perpAngle * Math.PI) / 180) * offsetPx;
+  let displayAngle = angle;
+  if (displayAngle > 90) displayAngle -= 180;
+  if (displayAngle < -90) displayAngle += 180;
   return (
     <div style={{
-      position: "absolute", left: x, top: y, fontSize: 15, fontWeight: 600, padding: "2px 10px",
-      background: "#fff", border: `2px solid ${color}`, borderRadius: 9, color, zIndex: 99, pointerEvents: "none"
-    }}>{text}</div>
+      position: "absolute",
+      left: pt.x + offsetX - (text.length * 4),
+      top: pt.y + offsetY - 18,
+      background: "#fff",
+      color,
+      padding: "2px 10px",
+      fontSize: 15,
+      borderRadius: 8,
+      border: `2px solid ${color}`,
+      fontWeight: 600,
+      pointerEvents: "none",
+      zIndex: 11,
+      userSelect: "none",
+      transform: `rotate(${displayAngle}deg)`,
+      boxShadow: "0 1px 4px #eee"
+    }}>
+      {text}
+    </div>
   );
 }
+
 function CurvedConnections() {
   const { source, uls1, uls2, uls3, uls4, blockchain } = positions;
   const FEED1_START = getSide(source, SRC_W, SRC_H, "left");
@@ -188,17 +216,17 @@ function CurvedConnections() {
           </marker>
         </defs>
       </svg>
-      {/* --- Line tags (absolutely positioned, not on lines) --- */}
-      <LineLabel x={240} y={90} color="#888" text="Message Feed" />
-      <LineLabel x={700} y={90} color="#888" text="Message Feed" />
-      <LineLabel x={110} y={280} color="#8B4513" text="Λ-Link" />
-      <LineLabel x={300} y={430} color="#8B4513" text="Λ-Link" />
-      <LineLabel x={720} y={440} color="#8B4513" text="Λ-Link" />
-      <LineLabel x={850} y={280} color="#8B4513" text="Λ-Link" />
-      <LineLabel x={240} y={170} color="#a63cff" text="RPC channel" />
-      <LineLabel x={690} y={170} color="#a63cff" text="RPC channel" />
-      <LineLabel x={300} y={605} color="#a63cff" text="RPC channel" />
-      <LineLabel x={700} y={605} color="#a63cff" text="RPC channel" />
+      // After the SVG lines, add these instead of old LineLabel:
+      <LineTag start={FEED1_START} end={FEED1_END} color="#888" text="Message Feed" t={0.55} offsetPx={32} />
+      <LineTag start={FEED2_START} end={FEED2_END} color="#888" text="Message Feed" t={0.55} offsetPx={32} />
+      <LineTag start={LAMBDA[0].from} end={LAMBDA[0].to} color="#8B4513" text="Λ-Link" t={0.60} offsetPx={-22} />
+      <LineTag start={LAMBDA[1].from} end={LAMBDA[1].to} color="#8B4513" text="Λ-Link" t={0.65} offsetPx={27} />
+      <LineTag start={LAMBDA[2].from} end={LAMBDA[2].to} color="#8B4513" text="Λ-Link" t={0.6} offsetPx={22} />
+      <LineTag start={LAMBDA[3].from} end={LAMBDA[3].to} color="#8B4513" text="Λ-Link" t={0.6} offsetPx={22} />
+      <LineTag start={rpc1_bc} end={rpc1_uls} color="#a63cff" text="RPC channel" t={0.46} offsetPx={25} />
+      <LineTag start={rpc2_bc} end={rpc2_uls} color="#a63cff" text="RPC channel" t={0.46} offsetPx={25} />
+      <LineTag start={rpc3_bc} end={rpc3_uls} color="#a63cff" text="RPC channel" t={0.45} offsetPx={-25} />
+      <LineTag start={rpc4_bc} end={rpc4_uls} color="#a63cff" text="RPC channel" t={0.46} offsetPx={22} />
     </>
   );
 }
@@ -206,7 +234,7 @@ function CurvedConnections() {
 function LegendBox() {
   return (
     <div style={{
-      width: 220, background: "#fff", border: "2px solid #d1d5db", borderRadius: 15,
+      width: 220, height: 220, background: "#fff", border: "2px solid #d1d5db", borderRadius: 15,
       padding: "18px 16px 13px 20px", boxShadow: "0 2px 8px #aaa2",
       display: "flex", flexDirection: "column", gap: 7,
       marginRight: 20,
@@ -249,10 +277,10 @@ function CLILog({ log }) {
   const show = log.slice(scroll, scroll + CLI_PAGE);
   return (
     <div style={{
-      width: 940, background: "#18181b", color: "#a3e635",
+      width: 940, height: 220, background: "#18181b", color: "#a3e635",
       fontFamily: "monospace", borderRadius: 10, padding: 13, overflow: "hidden", position: "relative", border: "2px solid #222"
     }}>
-      <div style={{ height: "128px", overflow: "hidden" }}>
+      <div style={{ height: "172px", overflow: "hidden" }}> {/* 220 - paddings/buttons */}
         {show.length === 0 && <div style={{ opacity: 0.6, fontStyle: "italic", color: "#999" }}>No logs</div>}
         {show.map((line, i) =>
           <div key={i} style={{ whiteSpace: "pre", fontSize: 15 }}>{line}</div>
