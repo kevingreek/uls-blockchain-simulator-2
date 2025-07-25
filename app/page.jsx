@@ -615,7 +615,7 @@ export default function Page() {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding : 20px,
+        padding : "20px 20px",
         margin: "0px auto 0 auto",
         height: 44,
         background: "transparent"
