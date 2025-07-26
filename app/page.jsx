@@ -313,7 +313,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         hash: null
       }]);
       setLog(logs => [
-        `[${new Date().toLocaleTimeString()}] [GEN] ${ulsTarget.toUpperCase()} - ${isRejected ? "REJECT" : "VALID"}  #${String(n).padStart(4, "0")} - ${tagType}`,
+        `[${new Date().toLocaleTimeString()}] [MSG GENERATED] ${ulsTarget.toUpperCase()} - ${isRejected ? "REJECT" : "VALID"}  #${String(n).padStart(4, "0")} - ${tagType}`,
         ...logs
       ]);
       setIdx(n);
@@ -329,7 +329,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         if (state === "feed" && progress < 1) return { ...msg, progress: Math.min(progress + 0.013, 1) };
         if (state === "feed" && progress >= 1) {
           setLog(logs => [
-            `[${new Date().toLocaleTimeString()}] [ARRIVE] ${at.toUpperCase()} | ${tag}`,
+            `[${new Date().toLocaleTimeString()}] [MSG ARRIVED TO] ${at.toUpperCase()} | ${tag}`,
             ...logs
           ]);
           return { ...msg, state: "blink", blink: true, lastStep: now, progress: 0 };
@@ -337,7 +337,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         if (state === "blink" && now - lastStep > 2000) {
           if (!isRejected) return { ...msg, state: "rpc-to-bc", progress: 0, lastStep: now };
           setLog(logs => [
-            `[${new Date().toLocaleTimeString()}] [REJECT] Direct to ULS-3/ULS-4 | ${tag}`,
+            `[${new Date().toLocaleTimeString()}] [MSG UNTOKENIZED/REJECT] Direct to ULS-3/ULS-4 | ${tag}`,
             ...logs
           ]);
           return { ...msg, state: "dup-to-uls3", progress: 0, lastStep: now };
@@ -345,7 +345,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         if (state === "rpc-to-bc" && progress < 1) return { ...msg, progress: Math.min(progress + 0.0085, 1) };
         if (state === "rpc-to-bc" && progress >= 1) {
           setLog(logs => [
-            `[${new Date().toLocaleTimeString()}] [BLOCKCHAIN] Tokenizing | ${tag}`,
+            `[${new Date().toLocaleTimeString()}] [MSG TO BLOCKCHAIN] Tokenization | ${tag}`,
             ...logs
           ]);
           return { ...msg, state: "on-bc", lastStep: now };
@@ -353,7 +353,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         if (state === "on-bc" && now - lastStep > 2000) {
           const newHash = randomHash();
           setLog(logs => [
-            `[${new Date().toLocaleTimeString()}] [TOKENIZED] Hash: ${newHash} | ${tag}`,
+            `[${new Date().toLocaleTimeString()}] [MSG TOKENIZED] HashKey: ${newHash} | ${tag}`,
             ...logs
           ]);
           return { ...msg, state: "rpc-from-bc", progress: 0, lastStep: now, hash: newHash, tag: `${tag} - ${newHash}` };
@@ -361,7 +361,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         if (state === "rpc-from-bc" && progress < 1) return { ...msg, progress: Math.min(progress + 0.0095, 1) };
         if (state === "rpc-from-bc" && progress >= 1) {
           setLog(logs => [
-            `[${new Date().toLocaleTimeString()}] [RETURN] ${at.toUpperCase()} (TOKENIZED) | ${tag}`,
+            `[${new Date().toLocaleTimeString()}] [MSG RETURNED TO ULS] ${at.toUpperCase()} (TOKENIZED) | ${tag}`,
             ...logs
           ]);
           return { ...msg, state: "dup-to-uls3", progress: 0, lastStep: now };
@@ -371,7 +371,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         }
         if (state === "dup-to-uls3" && progress >= 1) {
           setLog(logs => [
-            `[${new Date().toLocaleTimeString()}] [TO ULS-3] ${isRejected ? "REJECT" : "VALID"} | ${tag}`,
+            `[${new Date().toLocaleTimeString()}] [MSG TRASFERED TO ULS-3] ${isRejected ? "REJECT" : "VALID"} | ${tag}`,
             ...logs
           ]);
           setStacks(stacks => ({
@@ -382,7 +382,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         }
         if (state === "dup-to-uls4" && progress >= 1) {
           setLog(logs => [
-            `[${new Date().toLocaleTimeString()}] [TO ULS-4] ${isRejected ? "REJECT" : "VALID"} | ${tag}`,
+            `[${new Date().toLocaleTimeString()}] [MSG TRANSFERED TO ULS-4] ${isRejected ? "REJECT" : "VALID"} | ${tag}`,
             ...logs
           ]);
           setStacks(stacks => ({
@@ -459,7 +459,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
     render: (
       <>
         <CurvedConnections />
-        <RectBlock {...positions.source} label="External Message Source" color="#3888f3" bg="#e0f4ff" width={SRC_W} height={SRC_H} />
+        <RectBlock {...positions.source} label="Message Generator" color="#3888f3" bg="#e0f4ff" width={SRC_W} height={SRC_H} />
         <Blockchain {...positions.blockchain} />
         <RectBlock {...positions.uls1} label="ULS-1" />
         <RectBlock {...positions.uls2} label="ULS-2" />
