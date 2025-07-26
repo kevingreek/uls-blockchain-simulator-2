@@ -81,7 +81,7 @@ function MessageEnvelope({ x, y, state, tag, blink }) {
     </div>
   );
 }
-function LineTag({ start, end, color, text, t = 0.5, offsetPx = 30 }) {
+function LineTag({ start, end, color, text, t = 0.6, offsetPx = 30 }) {
   // Place label at t% along line, offset perpendicular by offsetPx, rotated with the line
   const angle = Math.atan2(end.y - start.y, end.x - start.x) * 180 / Math.PI;
   const perpAngle = angle + 90;
@@ -181,7 +181,7 @@ function CurvedConnections() {
             x2={line.to.x}
             y2={line.to.y}
             stroke="#8B4513"
-            strokeWidth={4}
+            strokeWidth={3}
             strokeDasharray="13,8"
             markerEnd="url(#arrowBrownSmall)"
           />
@@ -219,8 +219,8 @@ function CurvedConnections() {
       <LineTag start={FEED1_START} end={FEED1_END} color="#888" text="Message Feed" t={0.6} offsetPx={32} />
       <LineTag start={FEED2_START} end={FEED2_END} color="#888" text="Message Feed" t={0.6} offsetPx={-22} />
       <LineTag start={LAMBDA[0].from} end={LAMBDA[0].to} color="#8B4513" text="Λ-Link" t={0.6} offsetPx={-22} />
-      <LineTag start={LAMBDA[1].from} end={LAMBDA[1].to} color="#8B4513" text="Λ-Link" t={0.9} offsetPx={-22} />
-      <LineTag start={LAMBDA[2].from} end={LAMBDA[2].to} color="#8B4513" text="Λ-Link" t={0.6} offsetPx={22} />
+      <LineTag start={LAMBDA[1].from} end={LAMBDA[1].to} color="#8B4513" text="Λ-Link" t={0.6} offsetPx={-22} />
+      <LineTag start={LAMBDA[2].from} end={LAMBDA[2].to} color="#8B4513" text="Λ-Link" t={0.9} offsetPx={22} />
       <LineTag start={LAMBDA[3].from} end={LAMBDA[3].to} color="#8B4513" text="Λ-Link" t={0.9} offsetPx={22} />
       <LineTag start={rpc1_bc} end={rpc1_uls} color="#a63cff" text="RPC channel" t={0.6} offsetPx={-16} />
       <LineTag start={rpc2_bc} end={rpc2_uls} color="#a63cff" text="RPC channel" t={0.6} offsetPx={25} />
