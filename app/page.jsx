@@ -279,7 +279,7 @@ function CLILog({ log }) {
       width: 940, height: 220, background: "#18181b", color: "#a3e635",
       fontFamily: "monospace", borderRadius: 10, padding: 13, overflow: "hidden", position: "relative", border: "2px solid #222"
     }}>
-      <div style={{ height: "202px", overflow: "hidden" }}> 
+      <div style={{ height: "216px", overflow: "hidden" }}> 
         {show.length === 0 && <div style={{ opacity: 0.9, fontStyle: "italic", color: "#999" }}>No logs yet</div>}
         {show.map((line, i) =>
           <div key={i} style={{ whiteSpace: "pre", fontSize: 15 }}>{line}</div>
