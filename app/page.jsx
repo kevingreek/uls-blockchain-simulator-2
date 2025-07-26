@@ -299,7 +299,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
     const t = setTimeout(() => {
       const n = idx + 1;
       const tagOpt = ["Link 11", "Link 16", "Link 22", "JREAP"];
-      const tagType = tagOpt[Math.floor(Math.random() * 3)];
+      const tagType = tagOpt[Math.floor(Math.random() * 4)];
       const isRejected = (n % 5 === 0);  {/* ---additionally after 9th || n % 9 === 0 --- */}
       const ulsTarget = Math.random() < 0.5 ? "uls1" : "uls2";
       setMessages(msgs => [...msgs, {
