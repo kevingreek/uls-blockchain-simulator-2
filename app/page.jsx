@@ -371,7 +371,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         }
         if (state === "dup-to-uls3" && progress >= 1) {
           setLog(logs => [
-            `[${new Date().toLocaleTimeString()}] [MSG TRASFERED TO ULS-3] ${isRejected ? "REJECT" : "VALID"} | ${tag}`,
+            `[${new Date().toLocaleTimeString()}] [MSG TRANSFERED TO ULS-3] ${isRejected ? "REJECT" : "VALID"} | ${tag}`,
             ...logs
           ]);
           setStacks(stacks => ({
