@@ -361,7 +361,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         if (state === "rpc-from-bc" && progress < 1) return { ...msg, progress: Math.min(progress + 0.0095, 1) };
         if (state === "rpc-from-bc" && progress >= 1) {
           setLog(logs => [
-            `[${new Date().toLocaleTimeString()}] [MSG RETURNED TO ULS] ${at.toUpperCase()} (TOKENIZED) | ${tag}`,
+            `[${new Date().toLocaleTimeString()}] [MSG RETURNED TO] ${at.toUpperCase()} (TOKENIZED) | ${tag}`,
             ...logs
           ]);
           return { ...msg, state: "dup-to-uls3", progress: 0, lastStep: now };
