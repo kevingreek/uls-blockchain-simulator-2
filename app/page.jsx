@@ -222,10 +222,10 @@ function CurvedConnections() {
       <LineTag start={LAMBDA[1].from} end={LAMBDA[1].to} color="#8B4513" text="Λ-Link" t={0.9} offsetPx={-22} />
       <LineTag start={LAMBDA[2].from} end={LAMBDA[2].to} color="#8B4513" text="Λ-Link" t={0.6} offsetPx={22} />
       <LineTag start={LAMBDA[3].from} end={LAMBDA[3].to} color="#8B4513" text="Λ-Link" t={0.6} offsetPx={22} />
-      <LineTag start={rpc1_bc} end={rpc1_uls} color="#a63cff" text="RPC channel" t={0.6} offsetPx={25} />
+      <LineTag start={rpc1_bc} end={rpc1_uls} color="#a63cff" text="RPC channel" t={0.6} offsetPx={-25} />
       <LineTag start={rpc2_bc} end={rpc2_uls} color="#a63cff" text="RPC channel" t={0.6} offsetPx={25} />
       <LineTag start={rpc3_bc} end={rpc3_uls} color="#a63cff" text="RPC channel" t={0.5} offsetPx={-25} />
-      <LineTag start={rpc4_bc} end={rpc4_uls} color="#a63cff" text="RPC channel" t={0.6} offsetPx={-22} />
+      <LineTag start={rpc4_bc} end={rpc4_uls} color="#a63cff" text="RPC channel" t={0.6} offsetPx={22} />
     </>
   );
 }
