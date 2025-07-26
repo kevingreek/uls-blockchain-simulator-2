@@ -313,7 +313,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         hash: null
       }]);
       setLog(logs => [
-        `[${new Date().toLocaleTimeString()}] [MSG GENERATED] ${ulsTarget.toUpperCase()} - ${isRejected ? "REJECT" : "VALID"}  #${String(n).padStart(4, "0")} - ${tagType}`,
+        `[${new Date().toLocaleTimeString()}] [MSG GENERATED AND SENT TO] ${ulsTarget.toUpperCase()} - ${isRejected ? "REJECT" : "VALID"}  #${String(n).padStart(4, "0")} - ${tagType}`,
         ...logs
       ]);
       setIdx(n);
