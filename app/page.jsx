@@ -295,12 +295,12 @@ function CLILog({ log }) {
 
 function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, idx, setIdx, paused, setPaused }) {
   useEffect(() => {
-    if (paused || idx >= 9999) return;
+    if (paused || idx >= 1000) return;
     const t = setTimeout(() => {
       const n = idx + 1;
       const tagOpt = ["Link 11", "Link 16", "Link 22", "JREAP"];
       const tagType = tagOpt[Math.floor(Math.random() * 3)];
-      const isRejected = (n % 7 === 0 || n % 12 === 0);
+      const isRejected = (n % 5 === 0);  {/* ---additionally after 9th || n % 9 === 0 --- */}
       const ulsTarget = Math.random() < 0.5 ? "uls1" : "uls2";
       setMessages(msgs => [...msgs, {
         id: n,
@@ -317,7 +317,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         ...logs
       ]);
       setIdx(n);
-    }, 7000);
+    }, 9000);
     return () => clearTimeout(t);
   }, [idx, paused]);
   useEffect(() => {
@@ -334,7 +334,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
           ]);
           return { ...msg, state: "blink", blink: true, lastStep: now, progress: 0 };
         }
-        if (state === "blink" && now - lastStep > 1000) {
+        if (state === "blink" && now - lastStep > 2000) {
           if (!isRejected) return { ...msg, state: "rpc-to-bc", progress: 0, lastStep: now };
           setLog(logs => [
             `[${new Date().toLocaleTimeString()}] [REJECT] Direct to ULS-3/ULS-4 | ${tag}`,
@@ -621,8 +621,8 @@ export default function Page() {
       }}>
         <div style={{ display: "flex", alignItems: "center", fontWeight: "bold", fontSize: 17 }}>
           ULS-3:
-          <Counter value={simApp.valid3} label="Valid" color="#14c572" />
-          <Counter value={simApp.reject3} label="Rejected" color="#e73c3c" />
+          <Counter value={simApp.valid3} label="Tokenize/Valid" color="#14c572" />
+          <Counter value={simApp.reject3} label="Untokenized/Rejected" color="#e73c3c" />
         </div>
         <div style={{ display: "flex", gap: 12 }}>         
           <button onClick={() => setPaused(true)} style={{ background: "#3b82f6", color: "#fff", fontSize: 16 , padding: "6px 14px", border: "none", borderRadius: 7, fontWeight: 600, cursor: "pointer" }}>Pause</button>
