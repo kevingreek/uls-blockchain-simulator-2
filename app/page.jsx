@@ -599,7 +599,7 @@ export default function Page() {
       width: CANVAS_W,
       margin: "32px auto 0 auto",
       textAlign: "center",
-      fontSize: 22,
+      fontSize: 16,
       fontWeight: 600,
       color: "#374151",
       letterSpacing: 0.5,
@@ -610,7 +610,7 @@ export default function Page() {
       boxShadow: "0 2px 10px #a8c5e31c",
     }}>
       This simulator demonstrates the secured message flow between ULS nodes and a blockchain,
-      using the Λ-Link transport protocol, tokenization, and real-time validation, powered by Astropledge.
+      using the Λ-Link transport protocol, the RPC/API for tokenization and real-time validation, which is powered by Astropledge.
       ULS-1 & ULS-2 Instances getting messages from external sources randomly and aftert the tokenization, 
       they both send their messages to ULS-3 and to ULS-4. 
       Every 5 messages 1 message is going without tokenization to ULS-3 and to ULS4,
