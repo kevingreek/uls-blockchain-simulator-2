@@ -337,7 +337,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         if (state === "blink" && now - lastStep > 2000) {
           if (!isRejected) return { ...msg, state: "rpc-to-bc", progress: 0, lastStep: now };
           setLog(logs => [
-            `[${new Date().toLocaleTimeString()}] [MSG UNTOKENIZED/REJECT] Direct to ULS-3/ULS-4 | ${tag}`,
+            `[${new Date().toLocaleTimeString()}] [MSG UNTOKENIZED SENT] Direct transfer to ULS3 and to ULS4 | ${tag}`,
             ...logs
           ]);
           return { ...msg, state: "dup-to-uls3", progress: 0, lastStep: now };
