@@ -371,7 +371,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         }
         if (state === "dup-to-uls3" && progress >= 1) {
           setLog(logs => [
-            `[${new Date().toLocaleTimeString()}] [MSG TRANSFERED TO ULS-3] ${isRejected ? "REJECT" : "VALID"} | ${tag}`,
+            `[${new Date().toLocaleTimeString()}] [MSG TRANSFERED TO ULS3] ${isRejected ? "MSG IS NOT VALID" : "MSG IS VALID"} | ${tag}`,
             ...logs
           ]);
           setStacks(stacks => ({
@@ -382,7 +382,7 @@ function SimulatorApp({ log, setLog, messages, setMessages, stacks, setStacks, i
         }
         if (state === "dup-to-uls4" && progress >= 1) {
           setLog(logs => [
-            `[${new Date().toLocaleTimeString()}] [MSG TRANSFERED TO ULS-4] ${isRejected ? "REJECT" : "VALID"} | ${tag}`,
+            `[${new Date().toLocaleTimeString()}] [MSG TRANSFERED TO ULS4] ${isRejected ? "MSG IS NOT VALID" : "MSG IS VALID"} | ${tag}`,
             ...logs
           ]);
           setStacks(stacks => ({
@@ -613,7 +613,7 @@ export default function Page() {
       using the Λ-Link transport protocol, the RPC/API for tokenization and real-time validation, which is powered by Astropledge.
       ULS-1 & ULS-2 Instances getting messages from external sources randomly and aftert the tokenization, 
       they both send their messages to ULS-3 and to ULS-4. 
-      Every 5 messages 1 message is going without tokenization to ULS-3 and to ULS4,
+      Every 5th message is going without tokenization to ULS-3 and to ULS4,
       therefore at ULS-3 and UL-4 we have 2 visual stacks, 
       the green with tokenized messages and the red with untokenized ones.
     </div>
